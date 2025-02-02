@@ -1,0 +1,32 @@
+{
+  "name": "prompetize",
+  "version": "1.0.0",
+  "description": "**Prompetize** is an open-source Chrome extension designed to streamline the management, versioning, and sharing of prompt templates. It transforms your collection of prompts into a centralized, searchable repository with built-in version control and insightful analytics. By eliminating endless copy-paste cycles, Prompetize keeps your best prompt ideas at your fingertips—because every great conversation starts with the right prompt. The extension leverages GitHub for change tracking and collaboration via client-side OAuth, with no third-party backend involved.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zoharbabin/prompetize.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zoharbabin/prompetize/issues"
+  },
+  "homepage": "https://github.com/zoharbabin/prompetize#readme",
+  "devDependencies": {
+    "@types/chrome": "^0.0.300",
+    "@vitejs/plugin-react": "^4.3.4",
+    "vite": "^6.0.11",
+    "vite-plugin-chrome-extension": "^0.0.7"
+  },
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  }
+}
