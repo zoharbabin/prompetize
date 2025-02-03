@@ -1,0 +1,64 @@
+{
+  "manifest_version": 3,
+  "name": "Prompetize",
+  "description": "Streamline the management, versioning, and sharing of prompt templates with GitHub integration",
+  "options_ui": {
+    "page": "src/pages/options/index.html"
+  },
+  "action": {
+    "default_icon": "icon.svg",
+    "default_popup": "src/pages/popup/index.html"
+  },
+  "icons": {
+    "128": "icon.svg"
+  },
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "content_scripts": [
+    {
+      "js": [
+        "assets/index.tsx-loader-CAgfhBmu.js"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*",
+        "<all_urls>"
+      ],
+      "css": [
+        "contentStyle.css",
+        "assets/index-c0lKTqyI.css"
+      ]
+    }
+  ],
+  "devtools_page": "src/pages/devtools/index.html",
+  "web_accessible_resources": [
+    {
+      "matches": [],
+      "resources": [
+        "contentStyle.css",
+        "icon.svg"
+      ],
+      "use_dynamic_url": false
+    },
+    {
+      "matches": [
+        "<all_urls>",
+        "http://*/*",
+        "https://*/*"
+      ],
+      "resources": [
+        "assets/client-Boq2Mm0S.js",
+        "assets/browser-polyfill-BNsK6TjJ.js",
+        "assets/index.tsx-Du6UvNHB.js"
+      ],
+      "use_dynamic_url": false
+    }
+  ],
+  "version": "1.0.0",
+  "background": {
+    "service_worker": "service-worker-loader.js",
+    "type": "module"
+  }
+}
