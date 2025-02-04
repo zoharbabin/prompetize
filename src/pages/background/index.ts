@@ -1,56 +1,34 @@
-import Browser from 'webextension-polyfill';
-import type { Runtime, Tabs } from 'webextension-polyfill';
+import { ExtensionMessage, PerformSomeAction } from '../../types'; // Removed 'Browser' and included .ts extension
 
-interface ExtensionMessage {
-  type: 'INITIALIZE' | 'GET_STORAGE';
-  key?: string;
-}
-
-// Initialize extension when installed or updated
-Browser.runtime.onInstalled.addListener((details: Runtime.OnInstalledDetailsType) => {
-  console.log('Extension installed/updated:', details.reason);
-});
-
-// Handle messages from content scripts or popup
-Browser.runtime.onMessage.addListener(async (
-  message: ExtensionMessage,
-  sender: Runtime.MessageSender
+chrome.runtime.onMessage.addListener(async (
+  message: unknown,
+  sender: chrome.runtime.MessageSender,
+  sendResponse: (response: unknown) => void
 ) => {
-  console.log('Received message:', message, 'from:', sender);
-  
-  switch (message.type) {
-    case 'INITIALIZE':
-      // Handle initialization
-      return { success: true };
-      
-    case 'GET_STORAGE':
-      // Handle storage retrieval
-      try {
-        const data = await Browser.storage.local.get(message.key);
-        return { success: true, data };
-      } catch (error: unknown) {
-        console.error('Storage error:', error);
-        return { 
-          success: false, 
-          error: error instanceof Error ? error.message : 'Unknown error' 
-        };
-      }
-      
-    default:
-      console.warn('Unknown message type:', message.type);
-      return { success: false, error: 'Unknown message type' };
+  const typedMessage = message as ExtensionMessage;
+
+  try {
+    // Handle the message based on its type
+    switch (typedMessage.type) {
+      case 'SOME_ACTION':
+        // Perform some action
+        const result = await performSomeAction(typedMessage.data);
+        sendResponse({ success: true, data: result });
+        break;
+      // Add more cases as needed
+      default:
+        sendResponse({ success: false, error: 'Unknown action type' });
+    }
+  } catch (error) {
+    sendResponse({ success: false, error: (error as Error).message });
   }
+
+  // Returning true indicates you wish to send a response asynchronously
+  return true;
 });
 
-// Listen for tab updates
-Browser.tabs.onUpdated.addListener((
-  tabId: number,
-  changeInfo: Tabs.OnUpdatedChangeInfoType,
-  tab: Tabs.Tab
-) => {
-  if (changeInfo.status === 'complete' && tab.url) {
-    console.log('Tab updated:', tab.url);
-  }
-});
-
-console.log('Background script loaded');
+// Define performSomeAction
+const performSomeAction: PerformSomeAction = async (data: any) => {
+  // Implement the desired action here
+  return { processedData: data };
+};
