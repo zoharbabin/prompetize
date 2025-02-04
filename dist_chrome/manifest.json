@@ -6,8 +6,10 @@
     "page": "src/pages/options/index.html"
   },
   "action": {
-    "default_icon": "icon.svg",
-    "default_popup": "src/pages/popup/index.html"
+    "default_popup": "src/pages/popup/index.html",
+    "default_icon": {
+      "32": "icon.svg"
+    }
   },
   "icons": {
     "128": "icon.svg"
