@@ -63,3 +63,8 @@ out/
 
 # Miscellaneous temporary files
 *.tmp
+
+# Local utils
+git_commits.sh
+changes.diff
+digest.txt
