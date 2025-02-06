@@ -1,3 +1,5 @@
+Status: Implemented
+
 # ADR-004: Chat Platform Integration Strategy
 
 ### Status
@@ -9,6 +11,7 @@ Proposed
 Prompetize aims to integrate with popular chat platforms (e.g., ChatGPT, Claude, Gemini) to allow one-click insertion of prompt templates directly into chat interfaces. The integration must be seamless, non-intrusive, and resilient to UI changes in target platforms. Ensuring compatibility, security, and a smooth user experience across different chat environments is critical for the success of this feature.
 
 ### Decision
+
 Implement chat platform integration using a comprehensive approach that includes dynamic content script injection, robust error handling, and thorough testing methodologies.
 
 - **Content Script Injection:**
@@ -47,7 +50,7 @@ Implement chat platform integration using a comprehensive approach that includes
   - **Flexibility:** Support for multiple chat platforms broadens the user base and applicability of Prompetize.
   - **Expand on MutationObserver Implementation:** Provide more technical details or references on implementing MutationObservers to assist developers in maintaining the integration.
   - **Include Performance Metrics:** Add performance benchmarks or targets to ensure that DOM monitoring and script injection do not adversely affect browser performance.
-
+  
 - **Cons:**
   - **Increased Complexity:** Handling multiple chat platform DOM structures and ensuring compatibility adds development complexity.
   - **Maintenance Overhead:** Continuous updates are required to adapt to changes in target chat platforms, necessitating ongoing maintenance.
@@ -62,18 +65,12 @@ Implement chat platform integration using a comprehensive approach that includes
 - **Data Handling:**
   - **Implementation:** Sanitize any user inputs and template data before insertion to prevent injection attacks.
   - **Reasoning:** Ensures that malicious content cannot be injected into chat platforms, safeguarding both users and the extension’s reputation.
-  
-- **Permissions Management:**
-  - **Implementation:** Request only the necessary permissions required for chat platform integration (e.g., access to specific domains).
-  - **Reasoning:** Minimizes the extension’s attack surface and adheres to the principle of least privilege, enhancing user trust and security.
 
 ### Testing Strategy
 
 - **Test-Driven Development (TDD):**
-  - **Approach:** 
-    - Develop unit and integration tests for each component of the chat platform integration before implementing functionality.
-    - Ensure that all new features have corresponding tests to validate their behavior and integration points.
-    - **Reasoning:** Promotes high code quality, early bug detection, and maintains maintainability through well-tested code.
+  - **Approach:** Adopt TDD by writing tests for each module and plugin integration points before implementing functionalities.
+  - **Reasoning:** Ensures that new features and integrations are reliable, maintainable, and do not introduce regressions.
   
 - **Automated Testing:**
   - **Unit Tests:**
@@ -85,29 +82,31 @@ Implement chat platform integration using a comprehensive approach that includes
     - **Reasoning:** Validates that different parts of the integration work together seamlessly.
     
   - **End-to-End (E2E) Tests:**
-    - **Implementation:** Implement E2E tests using Cypress to simulate user interactions with the chat platforms, verifying that prompts are correctly inserted and that the UI behaves as expected.
-    - **Reasoning:** Ensures that the entire integration flow works smoothly from a user's perspective.
+    - **Implementation:** Utilize Cypress to simulate user interactions with the chat platforms, verifying that prompt insertion functions as expected across different environments.
+    - **Reasoning:** Confirms that the entire integration flow works smoothly from a user's perspective.
     
-  - **Continuous Integration (CI):**
-    - **Integration:** Incorporate automated tests into the CI pipeline using GitHub Actions to run tests on every commit and pull request.
-    - **Reasoning:** Maintains code reliability by ensuring that new changes do not break existing functionalities.
+  - **Performance Testing:**
+    - **Implementation:** Use performance profiling tools to ensure that DOM monitoring and script injection do not degrade browser performance.
+    - **Reasoning:** Maintains optimal performance and responsiveness of the extension even as integrations become more complex.
+    
+- **Continuous Integration (CI):**
+  - **Integration:** Incorporate automated tests into the CI pipeline using GitHub Actions. Configure workflows to run tests on every commit and pull request, ensuring that new changes do not break existing functionalities.
+  - **Reasoning:** Ensures code reliability and maintainability by automatically validating changes against the test suite.
 
 ### Documentation Updates
 
 - **CHANGELOG:**
   - **Maintenance:** 
-    - Record all significant changes related to chat platform integration, including feature additions, bug fixes, and security updates.
-    - Each entry should include the version number, date, and a brief description of the changes.
-    - **Reasoning:** Provides transparency and traceability for users and contributors, facilitating easier tracking of project evolution.
-  
+    - Document all changes related to chat platform integration, including feature additions, bug fixes, enhancements, and security updates.
+    - Provide versioned entries with dates and descriptions to maintain transparency and traceability.
+      
 - **README:**
   - **Enhancements:** 
-    - **Chat Platform Integration Setup:** Provide detailed instructions on how to configure and use the chat platform integration features.
-    - **Usage Guidelines:** Include examples and screenshots demonstrating how to use the “Templates” button, keyboard shortcuts, and placeholder handling.
-    - **Troubleshooting:** Offer solutions for common issues related to chat platform integration, such as failed injections or prompt insertion errors.
-    - **Contribution Guidelines:** Outline the processes for contributing to the chat platform integration features, including coding standards, testing requirements, and pull request protocols.
-    - **Security Practices:** Detail the security measures implemented in the integration to assure users of data protection and integrity.
-    - **Reasoning:** Ensures that users and contributors are well-informed about the security and privacy practices, fostering a secure and trustworthy environment.
+    - **Chat Platform Integration Setup:** Provide step-by-step instructions on configuring chat platform integrations, including any necessary permissions or settings.
+    - **Usage Guidelines:** Detail how to use the injected UI widgets, keyboard shortcuts, and handle template placeholders.
+    - **Troubleshooting:** Offer solutions for common integration issues, such as failed script injections or prompt insertion errors.
+    - **Contribution Guidelines:** Ensure that the `CONTRIBUTING.md` includes instructions for contributing to chat platform integrations, adhering to coding standards and security practices.
+    - **Reasoning:** Ensures that users and contributors are well-informed about the chat platform integration features, facilitating effective usage and contributions.
 
 ### Summary
 

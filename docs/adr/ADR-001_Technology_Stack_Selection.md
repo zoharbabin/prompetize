@@ -1,3 +1,5 @@
+Status: Partially Implemented
+
 # ADR-001: Technology Stack Selection
 
 ### Status

@@ -1,3 +1,5 @@
+Status: Partially Implemented
+
 # ADR-002: GitHub Integration Approach
 
 ### Status
