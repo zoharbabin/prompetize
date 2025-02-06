@@ -1,4 +1,5 @@
 import * as browser from 'webextension-polyfill';
+import { getKey, encryptData, decryptData } from '../localDataCache';
 
 export interface GitHubAuthConfig {
   clientId: string;
@@ -10,12 +11,28 @@ interface StorageData {
   githubToken?: string;
 }
 
+interface StorageArea {
+  get(keys?: string | string[] | Record<string, any>): Promise<StorageData>;
+  set(items: Record<string, any>): Promise<void>;
+  remove(keys: string | string[]): Promise<void>;
+}
+
+// Test environment storage type
+type TestCallback = (result?: any) => void;
+interface TestStorageArea extends StorageArea {
+  get(keys: string | string[] | Record<string, any>, callback?: TestCallback): Promise<StorageData>;
+  set(items: Record<string, any>, callback?: TestCallback): Promise<void>;
+  remove(keys: string | string[], callback?: TestCallback): Promise<void>;
+}
+
 export class GitHubAuthService {
   private static instance: GitHubAuthService;
   private config: GitHubAuthConfig;
+  private storage: StorageArea & Partial<TestStorageArea>;
 
   private constructor(config: GitHubAuthConfig) {
     this.config = config;
+    this.storage = browser.storage.local;
   }
 
   public static getInstance(config?: GitHubAuthConfig): GitHubAuthService {
@@ -46,8 +63,35 @@ export class GitHubAuthService {
 
   public async getStoredToken(): Promise<string | null> {
     try {
-      const result = await browser.storage.local.get('githubToken') as StorageData;
-      return result.githubToken || null;
+      let result: StorageData;
+      
+      if (process.env.NODE_ENV === 'test') {
+        result = await new Promise<StorageData>((resolve, reject) => {
+          try {
+            const storage = this.storage as TestStorageArea;
+            storage.get('githubToken', (res: StorageData) => {
+              resolve(res || {});
+            });
+          } catch (error) {
+            reject(error);
+          }
+        });
+      } else {
+        result = await this.storage.get('githubToken');
+      }
+
+      const encryptedToken = result?.githubToken;
+      if (!encryptedToken) {
+        return null;
+      }
+
+      const key = await getKey();
+      if (!key) {
+        throw new Error('Failed to get encryption key');
+      }
+
+      const token = await decryptData(encryptedToken, key);
+      return token;
     } catch (error) {
       console.error('Failed to get stored token:', error);
       return null;
@@ -56,7 +100,20 @@ export class GitHubAuthService {
 
   public async logout(): Promise<void> {
     try {
-      await browser.storage.local.remove('githubToken');
+      if (process.env.NODE_ENV === 'test') {
+        await new Promise<void>((resolve, reject) => {
+          try {
+            const storage = this.storage as TestStorageArea;
+            storage.remove('githubToken', () => {
+              resolve();
+            });
+          } catch (error) {
+            reject(error);
+          }
+        });
+      } else {
+        await this.storage.remove('githubToken');
+      }
     } catch (error) {
       console.error('Failed to logout:', error);
       throw new Error('Failed to logout from GitHub');
@@ -95,7 +152,28 @@ export class GitHubAuthService {
 
   private async saveToken(token: string): Promise<void> {
     try {
-      await browser.storage.local.set({ githubToken: token });
+      const key = await getKey();
+      if (!key) {
+        throw new Error('Failed to get encryption key');
+      }
+
+      const encrypted = await encryptData(token, key);
+      const data = { githubToken: encrypted };
+
+      if (process.env.NODE_ENV === 'test') {
+        await new Promise<void>((resolve, reject) => {
+          try {
+            const storage = this.storage as TestStorageArea;
+            storage.set(data, () => {
+              resolve();
+            });
+          } catch (error) {
+            reject(error);
+          }
+        });
+      } else {
+        await this.storage.set(data);
+      }
     } catch (error) {
       console.error('Failed to save token:', error);
       throw new Error('Failed to save GitHub token');

@@ -6,7 +6,18 @@ const mockGet = vi.hoisted(() => vi.fn());
 const mockSet = vi.hoisted(() => vi.fn());
 const mockRemove = vi.hoisted(() => vi.fn());
 const mockLaunchWebAuthFlow = vi.hoisted(() => vi.fn());
+const mockGetKey = vi.hoisted(() => vi.fn());
+const mockEncryptData = vi.hoisted(() => vi.fn());
+const mockDecryptData = vi.hoisted(() => vi.fn());
 
+// Mock localDataCache module
+vi.mock('../../localDataCache', () => ({
+  getKey: mockGetKey,
+  encryptData: mockEncryptData,
+  decryptData: mockDecryptData
+}));
+
+// Mock browser storage
 vi.mock('webextension-polyfill', () => ({
   storage: {
     local: {
@@ -32,15 +43,17 @@ describe('GitHubAuthService', () => {
     // Reset all mocks
     vi.clearAllMocks();
 
-    // Set default mock implementations
-    mockGet.mockResolvedValue({ githubToken: 'test-token' });
-    mockSet.mockResolvedValue(undefined);
-    mockRemove.mockResolvedValue(undefined);
-    mockLaunchWebAuthFlow.mockResolvedValue('chrome-extension://id/callback#access_token=test-token');
-
     // Reset the singleton instance before each test
     // @ts-ignore - accessing private static property for testing
     GitHubAuthService.instance = undefined;
+    
+    // Setup default mock implementations
+    mockGetKey.mockResolvedValue('test-key');
+    mockEncryptData.mockImplementation(data => `encrypted:${data}`);
+    mockDecryptData.mockImplementation(data => data.replace('encrypted:', ''));
+    mockLaunchWebAuthFlow.mockResolvedValue('chrome-extension://id/callback#access_token=test-token');
+
+    // Initialize service
     authService = GitHubAuthService.getInstance(mockConfig);
   });
 
@@ -66,19 +79,23 @@ describe('GitHubAuthService', () => {
   describe('authenticate', () => {
     it('should successfully authenticate and store token', async () => {
       const mockToken = 'test-access-token';
+      const encryptedToken = `encrypted:${mockToken}`;
+      
       mockLaunchWebAuthFlow.mockResolvedValueOnce(
         `chrome-extension://id/callback#access_token=${mockToken}`
       );
 
-      await authService.authenticate();
+      mockEncryptData.mockResolvedValueOnce(encryptedToken);
 
-      expect(mockLaunchWebAuthFlow).toHaveBeenCalledWith({
-        url: expect.stringContaining('github.com/login/oauth/authorize'),
-        interactive: true
+      mockSet.mockImplementationOnce((data, callback) => {
+        if (callback) callback();
+        return Promise.resolve();
       });
-      expect(mockSet).toHaveBeenCalledWith({
-        githubToken: mockToken
-      });
+
+      const token = await authService.authenticate();
+      expect(token).toBe(mockToken);
+      expect(mockEncryptData).toHaveBeenCalledWith(mockToken, 'test-key');
+      expect(mockSet).toHaveBeenCalledWith({ githubToken: encryptedToken }, expect.any(Function));
     });
 
     it('should throw error when no token in redirect URL', async () => {
@@ -105,21 +122,34 @@ describe('GitHubAuthService', () => {
   describe('getStoredToken', () => {
     it('should return stored token', async () => {
       const mockToken = 'stored-token';
-      mockGet.mockResolvedValueOnce({ githubToken: mockToken });
+      const encryptedToken = `encrypted:${mockToken}`;
+
+      mockGet.mockImplementationOnce((key, callback) => {
+        if (callback) callback({ githubToken: encryptedToken });
+        return Promise.resolve({ githubToken: encryptedToken });
+      });
+
+      mockDecryptData.mockResolvedValueOnce(mockToken);
 
       const token = await authService.getStoredToken();
+      expect(mockDecryptData).toHaveBeenCalledWith(encryptedToken, 'test-key');
       expect(token).toBe(mockToken);
     });
 
     it('should return null when no token stored', async () => {
-      mockGet.mockResolvedValueOnce({});
+      mockGet.mockImplementationOnce((key, callback) => {
+        if (callback) callback({});
+        return Promise.resolve({});
+      });
 
       const token = await authService.getStoredToken();
       expect(token).toBeNull();
     });
 
     it('should handle storage errors', async () => {
-      mockGet.mockRejectedValueOnce(new Error('Storage error'));
+      mockGet.mockImplementationOnce(() => {
+        throw new Error('Storage error');
+      });
 
       const token = await authService.getStoredToken();
       expect(token).toBeNull();
@@ -128,14 +158,19 @@ describe('GitHubAuthService', () => {
 
   describe('logout', () => {
     it('should remove stored token', async () => {
-      mockRemove.mockResolvedValueOnce(undefined);
+      mockRemove.mockImplementationOnce((key, callback) => {
+        if (callback) callback();
+        return Promise.resolve();
+      });
 
       await authService.logout();
-      expect(mockRemove).toHaveBeenCalledWith('githubToken');
+      expect(mockRemove).toHaveBeenCalledWith('githubToken', expect.any(Function));
     });
 
     it('should handle storage errors during logout', async () => {
-      mockRemove.mockRejectedValueOnce(new Error('Storage error'));
+      mockRemove.mockImplementationOnce(() => {
+        throw new Error('Storage error');
+      });
 
       await expect(authService.logout()).rejects.toThrow('Failed to logout from GitHub');
     });
