@@ -7,6 +7,11 @@ A Chrome/Firefox extension for managing, versioning, and sharing prompt template
 - 🔄 Sync prompt templates with GitHub
 - 📝 Create and manage prompt templates
 - 🏷️ Tag and categorize prompts
+- 📊 Analytics dashboard:
+  - Usage tracking and metrics
+  - Performance insights
+  - Time-range filtering
+  - Data export (JSON/CSV)
 - 🌙 Dark mode support
 - 🔍 Search and filter functionality
 - 🔒 Secure GitHub integration:
@@ -21,6 +26,7 @@ A Chrome/Firefox extension for managing, versioning, and sharing prompt template
 - TypeScript
 - TailwindCSS 4
 - Vite 6
+- Chart.js for analytics visualization
 - webextension-polyfill
 - Web Crypto API for encryption
 - ESLint + Prettier
@@ -98,13 +104,14 @@ The built extension will be in `dist_chrome` or `dist_firefox` respectively.
 │   │   └── styles/      # Global styles and TailwindCSS config
 │   ├── locales/        # i18n translations
 │   ├── services/       # Core services
+│   │   ├── analytics/  # Analytics and metrics tracking
 │   │   ├── github/     # GitHub integration services
 │   │   └── localData/  # Local storage and encryption
 │   └── pages/          # Extension pages
 │       ├── background/  # Service worker
 │       ├── content/     # Content scripts
 │       ├── devtools/    # DevTools integration
-│       ├── options/     # Options page
+│       ├── options/     # Options page with analytics dashboard
 │       ├── panel/       # DevTools panel UI
 │       └── popup/       # Popup UI
 │   ├── types/         # TypeScript type definitions
@@ -114,6 +121,32 @@ The built extension will be in `dist_chrome` or `dist_firefox` respectively.
 ├── manifest.json      # Extension manifest
 └── vite.config.ts    # Build configuration
 ```
+
+## Analytics Features
+
+The extension includes a comprehensive analytics dashboard that helps you understand your prompt usage and performance:
+
+### Metrics Tracked
+- Prompt creation and usage frequency
+- Modification patterns
+- Sync frequency
+- Error rates
+- Usage trends over time
+
+### Dashboard Features
+- Interactive charts and visualizations
+- Time range filtering (week/month/all)
+- Export data in JSON or CSV format
+- Real-time updates
+- Privacy-preserving client-side processing
+
+### Accessing Analytics
+1. Right-click the extension icon
+2. Select "Options"
+3. Click the "Analytics" tab
+
+### Data Privacy
+All analytics data is processed locally within the browser. No data is sent to external servers, ensuring complete privacy and control over your usage data.
 
 ## Development Workflow
 
@@ -130,6 +163,7 @@ The extension implements several security measures:
 - **Secure Authentication**: Uses Chrome's Identity API for secure GitHub OAuth flow
 - **Client-Side Operations**: All operations are performed client-side without third-party servers
 - **Minimal Permissions**: Only requests necessary OAuth scopes for GitHub integration
+- **Private Analytics**: All analytics data is processed and stored locally
 
 ## Testing
 

@@ -13,28 +13,28 @@
     "file": "assets/client-Boq2Mm0S.js",
     "name": "client"
   },
-  "_index.tsx-loader-CAgfhBmu.js": {
-    "file": "assets/index.tsx-loader-CAgfhBmu.js",
-    "src": "_index.tsx-loader-CAgfhBmu.js"
+  "_index.tsx-loader-D_33xokv.js": {
+    "file": "assets/index.tsx-loader-D_33xokv.js",
+    "src": "_index.tsx-loader-D_33xokv.js"
   },
   "_modulepreload-polyfill-B5Qt9EMX.js": {
     "file": "assets/modulepreload-polyfill-B5Qt9EMX.js",
     "name": "modulepreload-polyfill"
   },
-  "_tailwind-B8PYrWhD.css": {
-    "file": "assets/tailwind-B8PYrWhD.css",
-    "src": "_tailwind-B8PYrWhD.css"
-  },
-  "_tailwind-CTcJeN-E.js": {
-    "file": "assets/tailwind-CTcJeN-E.js",
+  "_tailwind-C-35F9jT.js": {
+    "file": "assets/tailwind-C-35F9jT.js",
     "name": "tailwind",
     "imports": [
       "_browser-polyfill-BNsK6TjJ.js",
       "_client-Boq2Mm0S.js"
     ],
     "css": [
-      "assets/tailwind-B8PYrWhD.css"
+      "assets/tailwind-C_S1ScUe.css"
     ]
+  },
+  "_tailwind-C_S1ScUe.css": {
+    "file": "assets/tailwind-C_S1ScUe.css",
+    "src": "_tailwind-C_S1ScUe.css"
   },
   "src/pages/background/index.ts": {
     "file": "assets/index.ts-ig2y0iNm.js",
@@ -43,7 +43,7 @@
     "isEntry": true
   },
   "src/pages/content/index.tsx": {
-    "file": "assets/index.tsx-Du6UvNHB.js",
+    "file": "assets/index.tsx-Cm6iL428.js",
     "name": "index.tsx",
     "src": "src/pages/content/index.tsx",
     "isEntry": true,
@@ -52,7 +52,7 @@
       "_browser-polyfill-BNsK6TjJ.js"
     ],
     "css": [
-      "assets/index-c0lKTqyI.css"
+      "assets/index--8QCG17M.css"
     ]
   },
   "src/pages/devtools/index.html": {
@@ -73,7 +73,7 @@
     "imports": [
       "_modulepreload-polyfill-B5Qt9EMX.js",
       "_client-Boq2Mm0S.js",
-      "_tailwind-CTcJeN-E.js",
+      "_tailwind-C-35F9jT.js",
       "_browser-polyfill-BNsK6TjJ.js"
     ],
     "css": [
@@ -88,7 +88,7 @@
     "imports": [
       "_modulepreload-polyfill-B5Qt9EMX.js",
       "_client-Boq2Mm0S.js",
-      "_tailwind-CTcJeN-E.js",
+      "_tailwind-C-35F9jT.js",
       "_browser-polyfill-BNsK6TjJ.js"
     ],
     "css": [
@@ -103,7 +103,7 @@
     "imports": [
       "_modulepreload-polyfill-B5Qt9EMX.js",
       "_client-Boq2Mm0S.js",
-      "_tailwind-CTcJeN-E.js",
+      "_tailwind-C-35F9jT.js",
       "_browser-polyfill-BNsK6TjJ.js"
     ],
     "css": [
