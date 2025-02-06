@@ -2,7 +2,11 @@
 
 ### Status
 
-Proposed
+Partially Implemented
+- Secure OAuth and Token Handling: Implemented (using Chrome's Identity API and encrypted storage)
+- Client-Side Operations: Implemented (all GitHub operations performed client-side)
+- Minimal Permissions: Implemented (using necessary OAuth scopes)
+- Data Privacy: Partially implemented (encrypted storage for sensitive data)
 
 ### Context
 

@@ -67,14 +67,17 @@ Based on the current review of the Architecture Decision Records (ADRs) and the 
 ### ADR-003: Local Storage and Data Management
 
 - **Local Data Cache:**
-  - **Next Steps:** 
-    - Utilize Chrome's Storage API to store prompt data locally for quick access and offline functionality.
+  - **Status:** Partially Implemented
+  - **Details:** Implemented encryption service for secure data storage using Web Crypto API
+  - **Next Steps:** Implement offline functionality and quick access features
 
 - **GitHub Sync Module:**
+  - **Status:** Not Implemented
   - **Next Steps:** 
     - Develop synchronization mechanisms between local storage and GitHub repositories.
 
 - **Data Schema:**
+  - **Status:** Not Implemented
   - **Next Steps:** 
     - Define and implement a JSON-based data schema enriched with Git metadata.
 
@@ -95,21 +98,25 @@ Based on the current review of the Architecture Decision Records (ADRs) and the 
 ### ADR-005: Security and Privacy Measures
 
 - **Secure OAuth and Token Handling:**
+  - **Status:** Implemented
+  - **Details:** 
+    - Implemented secure OAuth flows using Chrome's Identity API
+    - Added encrypted storage for access tokens using Web Crypto API
   - **Next Steps:** 
-    - Implement secure OAuth flows using Chrome's Identity API.
-    - Ensure transient and encrypted storage of access tokens.
+    - Implement token auto-renewal mechanism
 
 - **Client-Side Operations:**
-  - **Next Steps:** 
-    - Perform all GitHub operations client-side to maintain data integrity and security.
+  - **Status:** Implemented
+  - **Details:** All GitHub operations are performed client-side without third-party servers
 
 - **Minimal Permissions:**
-  - **Next Steps:** 
-    - Configure the extension to request only necessary OAuth scopes.
+  - **Status:** Implemented
+  - **Details:** OAuth scopes are configured to request only necessary permissions
 
 - **Data Privacy:**
+  - **Status:** Partially Implemented
+  - **Details:** Implemented encrypted storage for sensitive data
   - **Next Steps:** 
-    - Ensure that no prompt data is transmitted to or stored on external servers beyond GitHub.
     - Provide user controls for data management and access revocation.
 
 ### ADR-006: Analytics Module Integration
@@ -156,12 +163,14 @@ Based on the current review of the Architecture Decision Records (ADRs) and the 
 **Implemented:**
 - **ADR-001: Technology Stack Selection** (Partial implementation with React, TypeScript, Vite, ESLint, Prettier, and webextension-polyfill in place; missing Redux Toolkit and CSS Modules with Sass).
 - **ADR-002: GitHub Integration Approach** (Complete implementation with authentication, Git operations, repository management, rate limiting, and error handling).
+- **ADR-005: Security and Privacy Measures** (Partial implementation with secure OAuth, encrypted token storage, and client-side operations).
 
 **Partially Implemented:**
 - **ADR-001: Technology Stack Selection** (Missing Redux Toolkit; TailwindCSS used instead of CSS Modules with Sass).
+- **ADR-003: Local Storage and Data Management** (Implemented encryption service, pending sync module and data schema).
 
 **Pending Implementation:**
-- **ADR-003 to ADR-007:** Require comprehensive development to align the codebase with the architectural decisions outlined in these ADRs.
+- **ADR-004, ADR-006, ADR-007:** Require comprehensive development to align the codebase with the architectural decisions outlined in these ADRs.
 
 **Recommendations:**
 1. **Prioritize ADR Implementations:** Focus on implementing ADR-003 (Local Storage and Data Management) next, as it complements the GitHub integration and provides offline functionality.

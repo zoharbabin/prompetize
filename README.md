@@ -9,7 +9,9 @@ A Chrome/Firefox extension for managing, versioning, and sharing prompt template
 - 🏷️ Tag and categorize prompts
 - 🌙 Dark mode support
 - 🔍 Search and filter functionality
-- 🔒 Client-side OAuth for GitHub integration
+- 🔒 Secure GitHub integration:
+  - Client-side OAuth authentication
+  - Encrypted token storage
 - 🌐 Cross-browser support (Chrome/Firefox)
 - 🔥 Hot reloading during development
 
@@ -20,6 +22,7 @@ A Chrome/Firefox extension for managing, versioning, and sharing prompt template
 - TailwindCSS 4
 - Vite 6
 - webextension-polyfill
+- Web Crypto API for encryption
 - ESLint + Prettier
 
 ## Development
@@ -91,16 +94,21 @@ The built extension will be in `dist_chrome` or `dist_firefox` respectively.
 ```
 ├── src/
 │   ├── assets/          # Static assets and styles
-│   │   ├── img/        # Images and icons
-│   │   └── styles/     # Global styles and TailwindCSS config
+│   │   ├── img/         # Images and icons
+│   │   └── styles/      # Global styles and TailwindCSS config
 │   ├── locales/        # i18n translations
+│   ├── services/       # Core services
+│   │   ├── github/     # GitHub integration services
+│   │   └── localData/  # Local storage and encryption
 │   └── pages/          # Extension pages
-│       ├── background/ # Service worker
-│       ├── content/    # Content scripts
-│       ├── devtools/   # DevTools integration
-│       ├── options/    # Options page
-│       ├── panel/      # DevTools panel UI
-│       └── popup/      # Popup UI
+│       ├── background/  # Service worker
+│       ├── content/     # Content scripts
+│       ├── devtools/    # DevTools integration
+│       ├── options/     # Options page
+│       ├── panel/       # DevTools panel UI
+│       └── popup/       # Popup UI
+│   ├── types/         # TypeScript type definitions
+│   └── __tests__/    # Test files
 ├── public/            # Public static files
 ├── .github/           # GitHub Actions and templates
 ├── manifest.json      # Extension manifest
@@ -114,6 +122,15 @@ The built extension will be in `dist_chrome` or `dist_firefox` respectively.
 3. For Chrome: The extension will automatically reload
 4. For Firefox: Click the reload button in about:debugging
 
+## Security Features
+
+The extension implements several security measures:
+
+- **Encrypted Storage**: Sensitive data like GitHub tokens are encrypted using the Web Crypto API
+- **Secure Authentication**: Uses Chrome's Identity API for secure GitHub OAuth flow
+- **Client-Side Operations**: All operations are performed client-side without third-party servers
+- **Minimal Permissions**: Only requests necessary OAuth scopes for GitHub integration
+
 ## Testing
 
 The extension includes several types of pages:
@@ -121,6 +138,12 @@ The extension includes several types of pages:
 - Options: Right-click extension icon > Options
 - DevTools: Open DevTools > Prompetize tab
 - Content Scripts: Automatically injected into pages
+
+Run tests:
+```bash
+npm run test        # Run unit tests
+npm run test:watch  # Run tests in watch mode
+```
 
 ## Contributing
 
