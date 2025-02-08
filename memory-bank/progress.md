@@ -10,6 +10,10 @@
 *   Created the `techContext.md` file.
 *   Set up the basic file structure for the Chrome extension (`manifest.json`, `popup.html`, `popup.js`, `popup.css`, `images`).
 *   Implemented the prompt library management feature.
+*   Added a button to the popup to add a new prompt.
+*   Set up automated testing with Jest.
+*   Configured webpack for building the extension.
+*   Set up GitHub Actions for CI/CD.
 
 **What's Left to Build:**
 
@@ -22,6 +26,7 @@
 
 *   Initialized the memory bank files.
 *   Implemented basic prompt library functionality.
+*   Set up development infrastructure (testing, building, CI/CD).
 
 **Known Issues:**
 
