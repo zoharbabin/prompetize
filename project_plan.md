@@ -82,6 +82,10 @@ Prompetize is envisioned as a robust, open-source Chrome extension designed to b
 - **Security and Privacy:**  
   A commitment to user data protection, with a design that minimizes permissions and prioritizes privacy.
 
+- **Design & UX:**  
+  - Do not use binary assets. Make sure any images or assets are text editable, i.e. using svg and css and not png or jpg. 
+  - The design should always be easy to use, simple to understand, and futuristic looking with shades of blue and whites.
+
 ---
 
 ## System Architecture and Design Principles
