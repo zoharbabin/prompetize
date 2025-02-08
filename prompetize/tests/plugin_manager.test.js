@@ -1,4 +1,5 @@
 import pluginManager from '../plugin_manager.js';
+import { jest } from '@jest/globals';
 
 describe('PluginManager', () => {
   beforeEach(() => {

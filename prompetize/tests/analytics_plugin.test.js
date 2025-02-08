@@ -1,4 +1,5 @@
 import analyticsPlugin from '../plugins/analytics_plugin.js';
+import { jest } from '@jest/globals';
 
 // Mock chrome.storage.local
 global.chrome = {
