@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "Prompetize",
+  "version": "0.1.0",
+  "description": "A Chrome extension for managing, versioning, and analyzing prompt templates.",
+  "permissions": [
+    "storage"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Prompetize"
+  },
+  "icons": {
+    "16": "images/icon_16.svg",
+    "32": "images/icon_32.svg",
+    "48": "images/icon_48.svg",
+    "128": "images/icon_128.svg"
+  }
+}

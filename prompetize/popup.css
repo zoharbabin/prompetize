@@ -1,0 +1,13 @@
+body {
+  font-family: sans-serif;
+  background-color: #f0f8ff; /* Light blue background */
+  color: #000080; /* Dark blue text */
+}
+
+h1 {
+  color: #4682B4; /* Steel blue heading */
+}
+
+p {
+  font-size: 16px;
+}
