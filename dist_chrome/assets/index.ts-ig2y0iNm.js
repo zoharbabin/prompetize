@@ -1,1 +1,0 @@
-chrome.runtime.onMessage.addListener(async(e,c,r)=>{const t=e;try{switch(t.type){case"SOME_ACTION":const s=await a(t.data);r({success:!0,data:s});break;default:r({success:!1,error:"Unknown action type"})}}catch(s){r({success:!1,error:s.message})}return!0});const a=async e=>({processedData:e});
