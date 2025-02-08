@@ -17,8 +17,7 @@
 
 **What's Left to Build:**
 
-*   Design the user interface.
-*   Implement the plugin ecosystem.
+*   Add more plugin types (e.g., version control, analytics dashboard).
 *   Test and debug the extension.
 *   Package and distribute the extension.
 

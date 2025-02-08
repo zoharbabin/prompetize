@@ -1,13 +1,71 @@
 body {
   font-family: sans-serif;
-  background-color: #f0f8ff; /* Light blue background */
-  color: #000080; /* Dark blue text */
+  background-color: #f0f8ff;
+  color: #000080;
+  padding: 20px;
+  min-width: 300px;
 }
 
 h1 {
-  color: #4682B4; /* Steel blue heading */
+  color: #4682B4;
+  margin-bottom: 15px;
 }
 
 p {
   font-size: 16px;
+  margin-bottom: 20px;
+}
+
+#addPromptBtn {
+  background-color: #4682B4;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+#addPromptBtn:hover {
+  background-color: #357abd;
+}
+
+#promptList {
+  list-style: none;
+  padding: 0;
+}
+
+#promptList li {
+  background-color: white;
+  padding: 12px;
+  margin-bottom: 8px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.prompt-name {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.usage-count {
+  color: #666;
+  font-size: 14px;
+  margin-right: 10px;
+}
+
+.use-prompt-btn {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.use-prompt-btn:hover {
+  background-color: #45a049;
 }
