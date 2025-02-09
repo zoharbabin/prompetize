@@ -26,5 +26,9 @@
     "32": "images/icon_32.svg",
     "48": "images/icon_48.svg",
     "128": "images/icon_128.svg"
-  }
+  },
+  "web_accessible_resources": [{
+    "resources": ["analytics.html"],
+    "matches": ["<all_urls>"]
+  }]
 }

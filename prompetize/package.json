@@ -23,7 +23,8 @@
   "license": "ISC",
   "description": "A Chrome extension for managing, versioning, and analyzing prompt templates.",
   "dependencies": {
-    "punycode": "^2.3.1"
+    "punycode": "^2.3.1",
+    "chart.js": "^4.4.1"
   },
   "devDependencies": {
     "@babel/core": "^7.26.8",
