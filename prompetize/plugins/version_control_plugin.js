@@ -9,30 +9,40 @@ class VersionControlPlugin {
   }
 
   init() {
-    console.log('Version Control plugin initialized');
+    if (process.env.NODE_ENV !== 'test') {
+      console.log('Version Control plugin initialized');
+    }
   }
 
   trackChange(prompt) {
     const version = Date.now().toString();
     this.versions.set(prompt.id, this.versions.get(prompt.id) || []);
     this.versions.get(prompt.id).push({ version, prompt });
-    console.log(`Tracking change to prompt: ${prompt.name} version: ${version}`);
+    if (process.env.NODE_ENV !== 'test') {
+      console.log(`Tracking change to prompt: ${prompt.name} version: ${version}`);
+    }
   }
 
   revertToVersion(promptId, version) {
     const versions = this.versions.get(promptId);
     if (!versions) {
-      console.log(`No versions found for prompt: ${promptId}`);
+      if (process.env.NODE_ENV !== 'test') {
+        console.log(`No versions found for prompt: ${promptId}`);
+      }
       return null;
     }
 
     const versionData = versions.find(v => v.version === version);
     if (!versionData) {
-      console.log(`Version ${version} not found for prompt: ${promptId}`);
+      if (process.env.NODE_ENV !== 'test') {
+        console.log(`Version ${version} not found for prompt: ${promptId}`);
+      }
       return null;
     }
 
-    console.log(`Reverting prompt ${promptId} to version: ${version}`);
+    if (process.env.NODE_ENV !== 'test') {
+      console.log(`Reverting prompt ${promptId} to version: ${version}`);
+    }
     return versionData.prompt;
   }
 }
