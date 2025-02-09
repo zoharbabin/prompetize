@@ -25,6 +25,10 @@ class PromptLibrary {
   deletePrompt(id) {
     this.prompts = this.prompts.filter(prompt => prompt.id !== id);
   }
+
+  clearPrompts() {
+    this.prompts = [];
+  }
 }
 
 const promptLibrary = new PromptLibrary();
