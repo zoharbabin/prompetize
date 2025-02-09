@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', async function() {
       
       listItem.innerHTML = `
         <span class="prompt-name">${prompt.name}</span>
-        <span class="usage-count">(Used: ${usageCount} times)</span>
+        <span class="usage-count">(Used: ${usageCount.totalUses} times)</span>
         <button class="use-prompt-btn" data-id="${prompt.id}">Use</button>
       `;
       
@@ -58,11 +58,47 @@ document.addEventListener('DOMContentLoaded', async function() {
       useBtn.addEventListener('click', () => {
         analyticsPlugin.trackPromptUsage(prompt.id);
         displayPrompts(); // Refresh the display to show updated count
+        updateQuickStats(); // Update analytics stats
       });
     });
   }
 
+  // Update quick stats in the analytics section
+  function updateQuickStats() {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const stats = analyticsPlugin.getStatsInRange(today, new Date());
+    
+    let todayTotal = 0;
+    let successfulUses = 0;
+    let totalUses = 0;
+
+    Object.values(stats).forEach(promptStats => {
+      todayTotal += promptStats.totalUses;
+      successfulUses += (promptStats.successRate * promptStats.totalUses) / 100;
+      totalUses += promptStats.totalUses;
+    });
+
+    const successRate = totalUses > 0 ? (successfulUses / totalUses) * 100 : 0;
+
+    document.getElementById('todayUsage').textContent = todayTotal;
+    document.getElementById('successRate').textContent = `${successRate.toFixed(1)}%`;
+  }
+
+  // Open analytics dashboard in a new window
+  const openDashboardBtn = document.getElementById('openDashboardBtn');
+  openDashboardBtn.addEventListener('click', function() {
+    chrome.windows.create({
+      url: chrome.runtime.getURL('analytics.html'),
+      type: 'popup',
+      width: 800,
+      height: 600
+    });
+  });
+
+  // Initial display
   displayPrompts();
+  updateQuickStats();
 
   // Setup GitHub integration UI
   const githubAuthBtn = document.getElementById('githubAuthBtn');
@@ -92,6 +128,7 @@ document.addEventListener('DOMContentLoaded', async function() {
       const prompts = await githubPlugin.fetchPrompts();
       prompts.forEach(prompt => promptLibrary.addPrompt(prompt));
       displayPrompts();
+      updateQuickStats(); // Update analytics after importing prompts
       alert(`Successfully imported ${prompts.length} prompts!`);
     } catch (error) {
       console.error('Error importing prompts:', error);
@@ -135,6 +172,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         if (revertedPrompt) {
           promptLibrary.updatePrompt(selectedPrompt.id, revertedPrompt);
           displayPrompts();
+          updateQuickStats(); // Update analytics after reverting
           alert(`Reverted to version ${version}!`);
         } else {
           alert(`Version ${version} not found for prompt ${selectedPrompt.name}!`);

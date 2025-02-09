@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Prompetize Analytics Dashboard</title>
+    <link rel="stylesheet" href="popup.css">
+    <style>
+      .dashboard {
+        padding: 20px;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .filters {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 20px;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        margin-bottom: 30px;
+      }
+
+      .stat-card {
+        background: #f5f5f5;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      }
+
+      .chart-container {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        margin-bottom: 30px;
+      }
+
+      .usage-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+
+      .usage-table th,
+      .usage-table td {
+        padding: 10px;
+        border: 1px solid #ddd;
+        text-align: left;
+      }
+
+      .usage-table th {
+        background: #f0f0f0;
+      }
+
+      .export-section {
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid #ddd;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="dashboard">
+      <h1>Analytics Dashboard</h1>
+      
+      <div class="filters">
+        <div>
+          <label for="dateRange">Date Range:</label>
+          <select id="dateRange">
+            <option value="today">Today</option>
+            <option value="week">Last 7 Days</option>
+            <option value="month">Last 30 Days</option>
+            <option value="custom">Custom Range</option>
+          </select>
+        </div>
+        <div id="customDateRange" style="display: none;">
+          <label for="startDate">From:</label>
+          <input type="date" id="startDate">
+          <label for="endDate">To:</label>
+          <input type="date" id="endDate">
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <h3>Total Usage</h3>
+          <p id="totalUsage">0</p>
+        </div>
+        <div class="stat-card">
+          <h3>Overall Success Rate</h3>
+          <p id="overallSuccessRate">0%</p>
+        </div>
+        <div class="stat-card">
+          <h3>Most Used Prompt</h3>
+          <p id="mostUsedPrompt">-</p>
+        </div>
+        <div class="stat-card">
+          <h3>Average Uses Per Day</h3>
+          <p id="avgUsesPerDay">0</p>
+        </div>
+      </div>
+
+      <div class="chart-container">
+        <h2>Usage Over Time</h2>
+        <canvas id="usageChart"></canvas>
+      </div>
+
+      <div class="chart-container">
+        <h2>Success Rate Trends</h2>
+        <canvas id="successRateChart"></canvas>
+      </div>
+
+      <h2>Detailed Usage History</h2>
+      <table class="usage-table">
+        <thead>
+          <tr>
+            <th>Prompt</th>
+            <th>Total Uses</th>
+            <th>Success Rate</th>
+            <th>Last Used</th>
+          </tr>
+        </thead>
+        <tbody id="usageTableBody">
+        </tbody>
+      </table>
+
+      <div class="export-section">
+        <h2>Export Data</h2>
+        <button id="exportCsvBtn">Export as CSV</button>
+        <button id="exportJsonBtn">Export as JSON</button>
+      </div>
+    </div>
+
+    <script src="analytics_dashboard.js"></script>
+  </body>
+</html>
