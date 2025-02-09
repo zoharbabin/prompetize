@@ -3,7 +3,7 @@ body {
   background-color: #f0f8ff;
   color: #000080;
   padding: 20px;
-  min-width: 300px;
+  min-width: 400px;
 }
 
 h1 {
@@ -68,4 +68,72 @@ p {
 
 .use-prompt-btn:hover {
   background-color: #45a049;
+}
+
+section {
+  background-color: white;
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+h2 {
+  color: #4682B4;
+  font-size: 18px;
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+/* Version Control Section */
+.version-control button {
+  background-color: #4682B4;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.version-control button:hover {
+  background-color: #357abd;
+}
+
+/* GitHub Integration Section */
+.github-integration button {
+  background-color: #2b3137;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.github-integration button:hover {
+  background-color: #24292e;
+}
+
+.github-integration button:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+#githubAuthBtn {
+  background-color: #28a745;
+}
+
+#githubAuthBtn:hover {
+  background-color: #218838;
+}
+
+#githubAuthBtn:disabled {
+  background-color: #6c757d;
+}
+
+/* Prompt Management Section */
+.prompt-management #addPromptBtn {
+  margin-bottom: 15px;
 }

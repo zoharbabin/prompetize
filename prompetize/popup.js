@@ -2,13 +2,19 @@ import promptLibrary from './prompt_library.js';
 import pluginManager from './plugin_manager.js';
 import analyticsPlugin from './plugins/analytics_plugin.js';
 import versionControlPlugin from './plugins/version_control_plugin.js';
+import githubPlugin from './plugins/github_plugin.js';
 
 document.addEventListener('DOMContentLoaded', async function() {
   console.log('Prompetize extension loaded!');
 
-  // Register and initialize analytics plugin
+  // Register and initialize plugins
   pluginManager.registerPlugin('analytics', analyticsPlugin);
+  pluginManager.registerPlugin('versionControl', versionControlPlugin);
+  pluginManager.registerPlugin('github', githubPlugin);
+  
   await pluginManager.initializePlugin('analytics');
+  await pluginManager.initializePlugin('versionControl');
+  await pluginManager.initializePlugin('github');
 
   // Example usage:
   const prompts = promptLibrary.getPrompts();
@@ -57,6 +63,56 @@ document.addEventListener('DOMContentLoaded', async function() {
   }
 
   displayPrompts();
+
+  // Setup GitHub integration UI
+  const githubAuthBtn = document.getElementById('githubAuthBtn');
+  const importPromptsBtn = document.getElementById('importPromptsBtn');
+  const contributePromptBtn = document.getElementById('contributePromptBtn');
+
+  githubAuthBtn.addEventListener('click', async function() {
+    try {
+      const success = await githubPlugin.authenticate();
+      if (success) {
+        alert('Successfully authenticated with GitHub!');
+        githubAuthBtn.textContent = 'Connected to GitHub';
+        githubAuthBtn.disabled = true;
+        importPromptsBtn.disabled = false;
+        contributePromptBtn.disabled = false;
+      } else {
+        alert('Failed to authenticate with GitHub');
+      }
+    } catch (error) {
+      console.error('GitHub authentication error:', error);
+      alert('Error authenticating with GitHub');
+    }
+  });
+
+  importPromptsBtn.addEventListener('click', async function() {
+    try {
+      const prompts = await githubPlugin.fetchPrompts();
+      prompts.forEach(prompt => promptLibrary.addPrompt(prompt));
+      displayPrompts();
+      alert(`Successfully imported ${prompts.length} prompts!`);
+    } catch (error) {
+      console.error('Error importing prompts:', error);
+      alert('Error importing prompts from GitHub');
+    }
+  });
+
+  contributePromptBtn.addEventListener('click', async function() {
+    const selectedPrompt = promptLibrary.getPrompts()[0]; // TODO: Implement proper prompt selection
+    if (selectedPrompt) {
+      try {
+        await githubPlugin.contributePrompt(selectedPrompt);
+        alert('Successfully contributed prompt to GitHub!');
+      } catch (error) {
+        console.error('Error contributing prompt:', error);
+        alert('Error contributing prompt to GitHub');
+      }
+    } else {
+      alert('No prompt selected!');
+    }
+  });
 
   const trackChangesBtn = document.getElementById('trackChangesBtn');
   trackChangesBtn.addEventListener('click', function() {

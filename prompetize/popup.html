@@ -7,10 +7,25 @@
   <body>
     <h1>Prompetize</h1>
     <p>Manage your prompt templates with ease.</p>
-    <button id="addPromptBtn">Add Prompt</button>
-    <ul id="promptList"></ul>
-    <button id="trackChangesBtn">Track Changes</button>
-    <button id="revertVersionBtn">Revert to Version</button>
+    
+    <section class="prompt-management">
+      <h2>Prompt Management</h2>
+      <button id="addPromptBtn">Add Prompt</button>
+      <ul id="promptList"></ul>
+    </section>
+
+    <section class="version-control">
+      <h2>Version Control</h2>
+      <button id="trackChangesBtn">Track Changes</button>
+      <button id="revertVersionBtn">Revert to Version</button>
+    </section>
+
+    <section class="github-integration">
+      <h2>GitHub Integration</h2>
+      <button id="githubAuthBtn">Connect to GitHub</button>
+      <button id="importPromptsBtn" disabled>Import Prompts</button>
+      <button id="contributePromptBtn" disabled>Contribute Prompt</button>
+    </section>
     <script src="popup.js"></script>
   </body>
 </html>
