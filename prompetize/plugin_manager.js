@@ -40,7 +40,7 @@ class PluginManager {
   }
 }
 
-import versionControlPlugin from './plugins/version_control_plugin';
+import versionControlPlugin from './plugins/version_control_plugin.js';
 
 const pluginManager = new PluginManager();
 pluginManager.registerPlugin('versionControl', versionControlPlugin);
