@@ -1,20 +1,26 @@
-# Prompetize: Active Context
+s# Active Development Context
 
-**Current Work Focus:** Setting up the project structure and initializing the memory bank files.
+**Current Setup and Testing Instructions**
 
-**Recent Changes:**
+As of 2/8/2025, we have updated our project configuration to address the deprecated punycode warnings by preloading a custom setup file. Key updates include:
 
-*   Created the `memory-bank` directory.
-*   Created the `projectbrief.md` file.
-*   Created the `productContext.md` file.
+1. **Jest Setup Preload:**  
+   - A file `jest.setup.js` is placed in the project root.  
+   - This file overrides `process.emitWarning` to suppress the punycode deprecation warning (DEP0040).  
 
-**Next Steps:**
+2. **Updated Package Configuration:**  
+   - In `prompetize/package.json`, the Jest configuration includes:
+     - `"setupFiles": ["<rootDir>/../jest.setup.js"]`
+   - The test script is modified to preload the setup file:
+     - `"test": "node --require ../jest.setup.js node_modules/.bin/jest"`
 
-*   Create the remaining memory bank files (`systemPatterns.md`, `techContext.md`, and `progress.md`).
-*   Set up the basic file structure for the Chrome extension (`manifest.json`, `popup.html`, `popup.js`, etc.).
+3. **Testing Workflow:**  
+   - To run tests with the updated setup, execute:
+     ```
+     rm -rf node_modules package-lock.json
+     npm install
+     npm test
+     ```
+   - This ensures the warning is suppressed and the test suite executes cleanly.
 
-**Active Decisions and Considerations:**
-
-*   How to best structure the Chrome extension files.
-*   Which version control system to integrate with.
-*   How to design the analytics dashboard.
+These changes have been made to ensure a cleaner console output and a smoother development experience. Future updates to upstream dependencies may eventually remove the need for these overrides.
