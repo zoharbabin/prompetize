@@ -4,7 +4,9 @@
   "version": "0.1.0",
   "description": "A Chrome extension for managing, versioning, and analyzing prompt templates.",
   "permissions": [
-    "storage"
+    "storage",
+    "activeTab",
+    "scripting"
   ],
   "action": {
     "default_popup": "popup.html",

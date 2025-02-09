@@ -4,7 +4,7 @@
   "main": "popup.js",
   "type": "module",
   "scripts": {
-    "test": "node --experimental-vm-modules node_modules/.bin/jest",
+    "test": "node --require ../jest.setup.js node_modules/.bin/jest",
     "build": "webpack --mode production",
     "dev": "webpack --mode development --watch"
   },
@@ -12,12 +12,19 @@
     "transform": {
       "^.+\\.js$": "babel-jest"
     },
-    "testEnvironment": "jsdom"
+    "testEnvironment": "jsdom",
+    "moduleNameMapper": {
+      "^punycode$": "<rootDir>/node_modules/punycode/"
+    },
+    "setupFiles": ["<rootDir>/../jest.setup.js"]
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "A Chrome extension for managing, versioning, and analyzing prompt templates.",
+  "dependencies": {
+    "punycode": "^2.3.1"
+  },
   "devDependencies": {
     "@babel/core": "^7.26.8",
     "@babel/preset-env": "^7.26.8",
@@ -31,5 +38,9 @@
     "style-loader": "^4.0.0",
     "webpack": "^5.97.1",
     "webpack-cli": "^6.0.1"
+  },
+  "overrides": {
+    "jsdom": "21.1.0",
+    "tough-cookie": "5.0.0"
   }
 }
