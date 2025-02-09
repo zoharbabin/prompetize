@@ -6,7 +6,16 @@
   "permissions": [
     "storage",
     "activeTab",
-    "scripting"
+    "scripting",
+    "identity"
+  ],
+  "oauth2": {
+    "client_id": "${GITHUB_CLIENT_ID}",
+    "scopes": ["repo"]
+  },
+  "host_permissions": [
+    "https://github.com/*",
+    "https://api.github.com/*"
   ],
   "action": {
     "default_popup": "popup.html",
